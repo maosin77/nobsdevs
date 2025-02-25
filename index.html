@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NoBSDevs.pl | No-Nonsense Developer Community</title>
+    <style>
+      :root {
+        --primary: #2d3142;
+        --secondary: #4f5d75;
+        --accent: #ef8354;
+        --light: #f5f5f5;
+        --dark: #1d1d1d;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Fira Code', monospace, -apple-system, BlinkMacSystemFont,
+          'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+          'Helvetica Neue', sans-serif;
+      }
+
+      body {
+        background-color: var(--dark);
+        color: var(--light);
+        line-height: 1.6;
+      }
+
+      header {
+        background-color: var(--primary);
+        color: white;
+        padding: 1rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0.5rem;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+
+      .code {
+        color: var(--accent);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+      }
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+      }
+
+      .nav-links a:hover {
+        color: var(--accent);
+      }
+
+      .cta-button {
+        background-color: var(--accent);
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 4px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s ease;
+        text-decoration: none;
+      }
+
+      .cta-button:hover {
+        background-color: white;
+        color: var(--accent);
+      }
+
+      .hero {
+        background: linear-gradient(to right, var(--primary), var(--secondary));
+        color: white;
+        padding: 5rem 1rem;
+        text-align: center;
+      }
+
+      .hero-content {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+      }
+
+      .hero p {
+        font-size: 1.25rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+      }
+
+      .section {
+        padding: 5rem 1rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      h2 {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        color: var(--accent);
+        text-align: center;
+      }
+
+      .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .feature {
+        background-color: var(--primary);
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease;
+      }
+
+      .feature:hover {
+        transform: translateY(-5px);
+      }
+
+      .feature-icon {
+        background-color: var(--accent);
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+        color: white;
+        font-size: 1.5rem;
+      }
+
+      .feature h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--accent);
+      }
+
+      .testimonials {
+        background-color: var(--primary);
+        color: white;
+      }
+
+      .testimonial-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .testimonial {
+        background-color: rgba(255, 255, 255, 0.1);
+        padding: 2rem;
+        border-radius: 8px;
+        position: relative;
+      }
+
+      .quote {
+        font-size: 2rem;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        opacity: 0.2;
+      }
+
+      .testimonial p {
+        margin-bottom: 1.5rem;
+      }
+
+      .author {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .author-image {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+      }
+
+      .author-details h4 {
+        font-size: 1.1rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .author-details p {
+        font-size: 0.9rem;
+        margin: 0;
+        opacity: 0.8;
+      }
+
+      .faq {
+        background-color: var(--dark);
+      }
+
+      .faq-item {
+        background-color: var(--primary);
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .faq-question {
+        padding: 1.5rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        color: var(--accent);
+      }
+
+      .faq-answer {
+        padding: 0 1.5rem 1.5rem;
+        border-top: 1px solid #444;
+      }
+
+      .join-us {
+        text-align: center;
+        background-color: var(--primary);
+        margin-bottom: 100px;
+      }
+
+      .join-us p {
+        max-width: 700px;
+        margin: 0 auto 2rem;
+        font-size: 1.2rem;
+      }
+
+      footer {
+        background-color: var(--primary);
+        color: white;
+        padding: 3rem 1rem;
+        text-align: center;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      .social-links a {
+        color: white;
+        font-size: 1.5rem;
+        transition: color 0.3s ease;
+      }
+
+      .social-links a:hover {
+        color: var(--accent);
+      }
+
+      .copyright {
+        opacity: 0.7;
+        font-size: 0.9rem;
+        margin-top: 2rem;
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2.5rem;
+        }
+
+        h2 {
+          font-size: 2rem;
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        .mobile-menu {
+          display: block;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <nav>
+        <div class="logo">NoBSDevs<span class="code">.pl</span></div>
+        <div class="nav-links">
+          <a href="#features">Features</a>
+          <a href="#community">Community</a>
+          <a href="#faq">FAQ</a>
+          <a href="#join" class="cta-button">Join Slack</a>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h2>Cut the BS, join our Slack</h2>
+        <p>
+          An exclusive, invitation-only Slack channel for developers who are
+          sick of corporate bullshit. Use nicknames, vent about idiotic
+          managers, and talk about actual fucking code with people who get it.
+        </p>
+        <a href="#join" class="cta-button">Request Slack Invite</a>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section" id="features">
+      <h2>Our Slack Channel Offers</h2>
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">🔥</div>
+          <h3>No Corporate Bullshit</h3>
+          <p>
+            A place to call out bullshit when you see it. No "circle back" or
+            "synergy" crap allowed. We'll ban you for saying "let's take this
+            offline" unironically.
+          </p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🤐</div>
+          <h3>Anonymous Bitching</h3>
+          <p>
+            Use your nickname and rant freely about the idiots you work with. No
+            HR watching, no LinkedIn performance, no fear of screenshots
+            reaching your boss.
+          </p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">💻</div>
+          <h3>Real Code Talk</h3>
+          <p>
+            Channels dedicated to languages and frameworks where we actually
+            discuss technical details, not just management's latest bullshit
+            interpretation of "Agile."
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- First Steps -->
+    <section class="section testimonials" id="community">
+      <h2>First Steps In Our Slack</h2>
+      <div class="testimonial-grid">
+        <div class="testimonial">
+          <div class="quote">1</div>
+          <h3>Choose Your Nickname</h3>
+          <p>
+            Drop your corporate identity at the door. Pick something that won't
+            get you identified but still reflects your dev personality. The more
+            creative, the better.
+          </p>
+        </div>
+        <div class="testimonial">
+          <div class="quote">2</div>
+          <h3>Introduce Yourself</h3>
+          <p>
+            Hit up the #introductions channel. Tell us what you code, what
+            pisses you off about your job, and why corporate tech culture makes
+            you want to throw your laptop out the window.
+          </p>
+        </div>
+        <div class="testimonial">
+          <div class="quote">3</div>
+          <h3>Join The Rants</h3>
+          <p>
+            Jump into an active discussion in #daily-wtf or share your own
+            horror story. Don't hold back - we've all been where you are, and
+            there's no HR department here.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section faq" id="faq">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Can I invite my coworkers?</span>
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          <p>
+            Think carefully. Only invite coworkers you absolutely trust and who
+            genuinely hate corporate BS as much as you do. If you have any
+            doubts about whether they'd screenshot a rant and show HR, don't
+            invite them. This is a safe space, not a company team building
+            exercise.
+          </p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>What Slack channels do you have?</span>
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          <p>
+            We've got channels for specific tech stacks, a #daily-wtf for
+            sharing absurd workplace moments, #management-bullshit for venting
+            about pointless meetings and decisions, #job-hunting for those
+            trying to escape, and several others focused on coding, humor, and
+            commiseration.
+          </p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Who's behind this?</span>
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          <p>
+            Just developers like you. No company, no startup, no funding - just
+            people who code for a living and needed a safe space to talk
+            honestly. Even this site was created with Claude.ai because we were
+            too lazy to do it ourselves and didn't want to pay some agency.
+          </p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>What are the community rules?</span>
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          <p>
+            Pretty simple: 1) Don't be a different kind of asshole (racist,
+            sexist, etc.) 2) Keep it about tech and work culture 3) What happens
+            in the Slack stays in the Slack 4) No screenshots without permission
+            5) No business/promo spam 6) Help others when you can. That's it.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Join Us -->
+    <section class="section join-us" id="join">
+      <h2>Getting a Slack Invite</h2>
+      <p>
+        NoBSDevs Slack is invitation-only. Get an existing member to vouch for
+        you, or if you know the secret handshake, drop us a message. We keep it
+        small deliberately - because most "community scaling" is corporate
+        bullshit that dilutes quality conversations.
+      </p>
+      <a href="#" class="cta-button">Request Slack Invite</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="logo">NoBSDevs<span class="code">.pl</span></div>
+        <p>
+          This site was created by Claude.ai - no fancy agency, no corporate
+          bullshit.
+        </p>
+        <p>100% self-funded - no company, no investors, no "growth targets".</p>
+        <p class="copyright">
+          © 2025 NoBSDevs.pl — No bullshit, no corporate crap, just code and
+          complaints.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Simple FAQ toggle functionality
+      document.querySelectorAll('.faq-question').forEach((question) => {
+        question.addEventListener('click', () => {
+          const answer = question.nextElementSibling;
+          const isOpen = answer.style.display === 'block';
+
+          answer.style.display = isOpen ? 'none' : 'block';
+          question.querySelector('span:last-child').textContent = isOpen
+            ? '+'
+            : '-';
+        });
+      });
+
+      // Initialize - hide all answers
+      document.querySelectorAll('.faq-answer').forEach((answer) => {
+        answer.style.display = 'none';
+      });
+    </script>
+  </body>
+</html>
+
