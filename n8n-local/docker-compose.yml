@@ -7,10 +7,11 @@ services:
       - TZ=${TZ}
       - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY}
       # poniższe dopiero, jeśli wystawiasz za proxy z HTTPS:
-      # - N8N_HOST=${N8N_HOST}
-      # - WEBHOOK_URL=${WEBHOOK_URL}
+      - N8N_HOST=${N8N_HOST}
+      - WEBHOOK_URL=${WEBHOOK_URL}
     volumes:
       - ./data:/home/node/.n8n
     restart: unless-stopped
     # (opcjonalne) ustaw konkretny UID/GID, jeśli na Linuxie chcesz uniknąć problemów z uprawnieniami:
     # user: "1000:1000"
+
