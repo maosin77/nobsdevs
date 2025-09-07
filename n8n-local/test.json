@@ -1,0 +1,180 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://youtube-transcript3.p.rapidapi.com/api/transcript-with-url",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "={{ $json['youtube link'] }}"
+            },
+            {
+              "name": "flat_tex",
+              "value": "true"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-host",
+              "value": "youtube-transcript3.p.rapidapi.com"
+            },
+            {
+              "name": "x-rapidapi-key",
+              "value": "f7ce45ca31msh335ff4f4bf8bef5p193a02jsnf0133aad6c21"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "={{ $json['Youtube Video Url'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c62b936a-309c-4bdd-84bb-f626a70e0655",
+      "name": "extractTranscript",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [144, -432],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "formTitle": "youtube-link",
+        "formDescription": "youtube-link",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "youtube link",
+              "placeholder": "https://www.youtube.com/watch?v=ONgECvZNI3o",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [-96, -400],
+      "id": "20d087b6-1291-46ec-91e1-e12e760ec0d2",
+      "name": "On form submission",
+      "webhookId": "bb3ba518-4b00-47dc-b944-6227db0df596"
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "content": "={{ $('On form submission').item.json['youtube link'] }}\n{{ ($json.text || '').slice(0, 1900) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [736, -528],
+      "id": "abbb28b2-d8c6-4b14-bf09-ae7b9b9262e4",
+      "name": "Discord1",
+      "webhookId": "7d04e86c-df3b-4b13-a0a8-4e848e6af6db",
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "BNaP48yIK8GgmNj2",
+          "name": "Discord Webhook account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Streść poniższy transkrypt w maksymalnie 1000 znakach. Skup się na najważniejszych informacjach i sensie wypowiedzi, pomijając dygresje i powtórzenia. Zwróć wyłącznie czyste streszczenie, bez komentarzy, wstępów ani dodatkowych objaśnień:{{ JSON.stringify($json?.transcript ?? $json ?? {}, null, 2) }}",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [352, -512],
+      "id": "efc7dc91-0363-468f-a4aa-e26736a2fa5c",
+      "name": "Basic LLM Chain1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [352, -352],
+      "id": "7e4e3de0-b8e4-42d7-a197-14341ad10bed",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "X08evELyk7kG1pan",
+          "name": "OpenAi account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "extractTranscript": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "extractTranscript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain1": {
+      "main": [
+        [
+          {
+            "node": "Discord1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4fd8916747bad63c96c8c8ef95cb1fda61ad371134746a403abb61835233cdc3"
+  }
+}

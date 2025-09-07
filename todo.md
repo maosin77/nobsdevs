@@ -1,0 +1,3 @@
+- wrzucic wszystko na gita
+- odpalic dockera
+- dodac w nginx n8n.nobsdevs.org kierować na dockera
